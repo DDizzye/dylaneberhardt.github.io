@@ -1,0 +1,199 @@
+/* ------------------------------
+   GLOBAL STYLES
+------------------------------ */
+
+:root {
+  --bg-dark: #0d0f1a;
+  --bg-card: rgba(255, 255, 255, 0.06);
+  --accent: #4cc9f0;
+  --accent2: #7209b7;
+  --text-light: #e9e9e9;
+  --text-muted: #b3b3b3;
+  --radius: 14px;
+  --transition: 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0d0f1a, #1a1033);
+  color: var(--text-light);
+  line-height: 1.6;
+  padding-bottom: 50px;
+}
+
+/* ------------------------------
+   HEADER
+------------------------------ */
+
+header {
+  text-align: center;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top, #1a1033, #0d0f1a);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+/* ------------------------------
+   SECTIONS
+------------------------------ */
+
+main section {
+  width: 85%;
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  transition: var(--transition);
+}
+
+main section:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+/* ------------------------------
+   SKILLS
+------------------------------ */
+
+.skill {
+  margin-bottom: 20px;
+}
+
+.skill p {
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.skill-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.skill-level {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: var(--radius);
+  transition: width 1.2s ease;
+}
+
+/* ------------------------------
+   PROJECTS
+------------------------------ */
+
+.projects {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.project-card {
+  flex: 1;
+  min-width: 200px;
+  padding: 25px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  border-color: var(--accent2);
+  box-shadow: 0 0 20px rgba(114, 9, 183, 0.4);
+}
+
+/* ------------------------------
+   CONTACT FORM
+------------------------------ */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+input,
+textarea {
+  margin-top: 6px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-light);
+  outline: none;
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid var(--accent);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+button {
+  padding: 12px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+}
+
+/* ------------------------------
+   FOOTER
+------------------------------ */
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
