@@ -20,11 +20,30 @@
   font-family: "Segoe UI", sans-serif;
 }
 
+/* Animated background glow */
 body {
   background: linear-gradient(135deg, #0d0f1a, #1a1033);
+  background-size: 200% 200%;
+  animation: backgroundShift 12s ease infinite;
   color: var(--text-light);
   line-height: 1.6;
   padding-bottom: 50px;
+}
+
+@keyframes backgroundShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Smooth page fade in */
+body {
+  animation: fadeIn 1.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ------------------------------
@@ -66,17 +85,43 @@ main section {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   transition: var(--transition);
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+/* Subtle floating card animation */
+@keyframes floatCard {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
 }
 
 main section:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px) scale(1.01);
   border-color: var(--accent);
+  box-shadow: 0 0 35px rgba(76, 201, 240, 0.3);
 }
 
+/* Heading underline animation */
 h2 {
   margin-bottom: 20px;
   font-size: 2rem;
   color: var(--accent);
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  bottom: -6px;
+  left: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: 0.5s ease;
+}
+
+section:hover h2::after {
+  width: 100%;
 }
 
 /* ------------------------------
@@ -105,34 +150,13 @@ h2 {
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   border-radius: var(--radius);
   transition: width 1.2s ease;
+  animation: glowPulse 3s infinite alternate;
 }
 
-/* ------------------------------
-   PROJECTS
------------------------------- */
-
-.projects {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.project-card {
-  flex: 1;
-  min-width: 200px;
-  padding: 25px;
-  background: var(--bg-card);
-  border-radius: var(--radius);
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: var(--transition);
-  cursor: pointer;
-}
-
-.project-card:hover {
-  transform: scale(1.05);
-  border-color: var(--accent2);
-  box-shadow: 0 0 20px rgba(114, 9, 183, 0.4);
+/* Skill glow animation */
+@keyframes glowPulse {
+  from { box-shadow: 0 0 5px var(--accent); }
+  to { box-shadow: 0 0 15px var(--accent2); }
 }
 
 /* ------------------------------
@@ -168,6 +192,7 @@ input:focus,
 textarea:focus {
   border: 1px solid var(--accent);
   background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 10px rgba(76, 201, 240, 0.4);
 }
 
 button {
@@ -183,7 +208,41 @@ button {
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+  box-shadow: 0 0 20px rgba(76, 201, 240, 0.7);
+}
+
+/* ------------------------------
+   PROFILE PHOTO
+------------------------------ */
+
+.profile-photo {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 25px auto;
+  padding: 6px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow:
+    0 0 20px rgba(76, 201, 240, 0.6),
+    0 0 40px rgba(114, 9, 183, 0.4);
+  animation: floatImage 5s ease-in-out infinite;
+  transition: var(--transition);
+}
+
+/* Floating animation */
+@keyframes floatImage {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+.profile-photo:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 30px rgba(76, 201, 240, 0.9),
+    0 0 60px rgba(114, 9, 183, 0.7);
 }
 
 /* ------------------------------
@@ -196,4 +255,5 @@ footer {
   padding: 20px;
   color: var(--text-muted);
   font-size: 0.9rem;
+  opacity: 0.8;
 }
