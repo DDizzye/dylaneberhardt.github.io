@@ -1,0 +1,108 @@
+/* ================================
+   Portfolio Stylesheet
+   Author: Dylan Eberhardt
+   ================================ */
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0f172a;
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+header {
+  text-align: center;
+  padding: 2rem;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+/* MAIN LAYOUT (NO fr UNITS) */
+main {
+  display: block;
+  padding: 2rem;
+}
+
+section {
+  background-color: #1e293b;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+/* SKILLS */
+.skill {
+  margin-bottom: 1rem;
+}
+
+.skill-bar {
+  background-color: #334155;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.skill-level {
+  height: 1rem;
+  background-color: #38bdf8;
+}
+
+/* PROJECTS (FLEX INSTEAD OF GRID) */
+.projects {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.project-card {
+  background-color: #334155;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  width: 200px;
+}
+
+/* FORM */
+form {
+  display: block;
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 0.75rem;
+  background-color: #38bdf8;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 1rem;
+}
