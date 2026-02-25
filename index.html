@@ -139,6 +139,104 @@
   <footer>
     <p>&copy; 2026 Dylan Eberhardt</p>
   </footer>
+<script>
+/* ------------------------------
+   PERSONAL GREETING (TIME-BASED)
+------------------------------ */
 
+const header = document.querySelector("header p");
+const hour = new Date().getHours();
+let greeting;
+
+if (hour < 12) {
+  greeting = "Good morning — thanks for visiting.";
+} else if (hour < 18) {
+  greeting = "Good afternoon — glad you're here.";
+} else {
+  greeting = "Good evening — welcome to my portfolio.";
+}
+
+header.textContent = greeting;
+
+
+/* ------------------------------
+   TYPING EFFECT FOR NAME
+------------------------------ */
+
+const nameElement = document.querySelector("header h1");
+const originalName = "Dylan Eberhardt";
+let index = 0;
+nameElement.textContent = "";
+
+function typeEffect() {
+  if (index < originalName.length) {
+    nameElement.textContent += originalName.charAt(index);
+    index++;
+    setTimeout(typeEffect, 80);
+  }
+}
+
+typeEffect();
+
+
+/* ------------------------------
+   SKILL BAR ANIMATION ON SCROLL
+------------------------------ */
+
+const skillLevels = document.querySelectorAll(".skill-level");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const width = entry.target.style.width;
+      entry.target.style.width = "0";
+      setTimeout(() => {
+        entry.target.style.width = width;
+      }, 200);
+    }
+  });
+}, { threshold: 0.5 });
+
+skillLevels.forEach(skill => observer.observe(skill));
+
+
+/* ------------------------------
+   CONTACT FORM MESSAGE
+------------------------------ */
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nameInput = form.querySelector("input[type='text']").value;
+
+  alert(`Thanks ${nameInput || "for reaching out"}! I'll get back to you soon.`);
+
+  form.reset();
+});
+
+
+/* ------------------------------
+   CURSOR GLOW EFFECT
+------------------------------ */
+
+const glow = document.createElement("div");
+glow.style.position = "fixed";
+glow.style.width = "15px";
+glow.style.height = "15px";
+glow.style.borderRadius = "50%";
+glow.style.background = "rgba(76, 201, 240, 0.7)";
+glow.style.pointerEvents = "none";
+glow.style.boxShadow = "0 0 20px rgba(76, 201, 240, 0.9)";
+glow.style.transform = "translate(-50%, -50%)";
+glow.style.zIndex = "9999";
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove", e => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+});
+</script>
 </body>
 </html>
