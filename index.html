@@ -1,242 +1,1364 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | Dylan Eberhardt</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>StudySync – Academic Planner & Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --bg-softer: #111827;
+      --accent: #6366f1;
+      --accent-soft: rgba(99, 102, 241, 0.15);
+      --accent-strong: #4f46e5;
+      --accent-alt: #22c55e;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border-subtle: #1f2937;
+      --danger: #f97373;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.75);
+      --shadow-subtle: 0 10px 30px rgba(15, 23, 42, 0.6);
+      --transition: 200ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1240px;
+      background: linear-gradient(145deg, #020617 0%, #020617 40%, #020617 100%);
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      position: relative;
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+
+    .sidebar {
+      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
+      border-right: 1px solid rgba(148, 163, 184, 0.12);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(129, 140, 248, 0.12), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .sidebar-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      height: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: conic-gradient(
+        from 180deg,
+        #4f46e5,
+        #22c55e,
+        #06b6d4,
+        #4f46e5
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5e7eb;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 12px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 18px;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: #9ca3af;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background var(--transition), color var(--transition),
+        border-color var(--transition), transform var(--transition);
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+      color: #e5e7eb;
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: #f9fafb;
+      border-color: transparent;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.55);
+    }
+
+    .nav-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .nav-item.active .nav-icon {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .persona-card {
+      margin-top: 8px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, #111827 0, #020617 65%);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: var(--shadow-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .persona-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .persona-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .persona-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .persona-meta {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .persona-meta strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .persona-note {
+      font-size: 12px;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.35);
+      font-size: 11px;
+      color: #6b7280;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-footer span {
+      white-space: nowrap;
+    }
+
+    .badge-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+    }
+
+    .main {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(79, 70, 229, 0.16), transparent 55%),
+        radial-gradient(circle at 90% 0, rgba(34, 197, 94, 0.12), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .main-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .top-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+    }
+
+    .page-subtitle {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+    }
+
+    .primary-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.55);
+      transition: transform var(--transition), box-shadow var(--transition),
+        filter var(--transition);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 16px 40px rgba(79, 70, 229, 0.7);
+    }
+
+    .primary-btn span.icon {
+      font-size: 14px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, #111827 0, #020617 65%);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: var(--shadow-subtle);
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #6b7280;
+    }
+
+    .card-meta {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      background: rgba(15, 23, 42, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4f46e5;
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: #d1d5db;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-body p {
+      color: #9ca3af;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .pill-small {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .pill-small.accent {
+      border-color: rgba(79, 70, 229, 0.7);
+      color: #a5b4fc;
+      background: rgba(79, 70, 229, 0.12);
+    }
+
+    .pill-small.success {
+      border-color: rgba(34, 197, 94, 0.7);
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, 0.12);
+    }
+
+    .pill-small.warn {
+      border-color: rgba(234, 179, 8, 0.7);
+      color: #facc15;
+      background: rgba(234, 179, 8, 0.12);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .stat {
+      padding: 8px 9px;
+      border-radius: var(--radius-md);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .stat-trend {
+      font-size: 11px;
+      color: #22c55e;
+    }
+
+    .stat-trend.down {
+      color: #f97373;
+    }
+
+    .stat-pill {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .form-label {
+      color: #9ca3af;
+    }
+
+    .input {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 7px 10px;
+      color: #e5e7eb;
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+    }
+
+    .input::placeholder {
+      color: #6b7280;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .input-row .form-group {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .secondary-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      padding: 7px 12px;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .secondary-btn:hover {
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .table thead {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .table th,
+    .table td {
+      padding: 7px 8px;
+      text-align: left;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .table th {
+      font-weight: 500;
+      color: #9ca3af;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .table td {
+      color: #e5e7eb;
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .badge-dot.warn {
+      background: #facc15;
+    }
+
+    .badge-dot.danger {
+      background: #f97373;
+    }
+
+    .chart-shell {
+      margin-top: 6px;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top, #020617 0, #020617 60%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 10px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #4f46e5;
+    }
+
+    .legend-swatch.alt {
+      background: #22c55e;
+    }
+
+    .legend-swatch.muted {
+      background: #6b7280;
+    }
+
+    .chart-body {
+      position: relative;
+      height: 150px;
+      border-radius: 10px;
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), #020617);
+      overflow: hidden;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .chart-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+          to right,
+          rgba(55, 65, 81, 0.4) 1px,
+          transparent 1px
+        ),
+        linear-gradient(to bottom, rgba(55, 65, 81, 0.4) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.6;
+    }
+
+    .chart-line {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 70%, rgba(79, 70, 229, 0.6), transparent 55%),
+        radial-gradient(circle at 60% 30%, rgba(34, 197, 94, 0.6), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+    }
+
+    .chart-x-axis {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 10px;
+      color: #6b7280;
+    }
+
+    .chart-y-axis {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 10px;
+      color: #6b7280;
+    }
+
+    .section-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .section-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .list-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4f46e5;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #9ca3af;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .tag.tech {
+      border-color: rgba(79, 70, 229, 0.7);
+      color: #a5b4fc;
+      background: rgba(79, 70, 229, 0.12);
+    }
+
+    .tag.db {
+      border-color: rgba(34, 197, 94, 0.7);
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, 0.12);
+    }
+
+    .tag.deploy {
+      border-color: rgba(56, 189, 248, 0.7);
+      color: #7dd3fc;
+      background: rgba(8, 47, 73, 0.7);
+    }
+
+    .tag.chart {
+      border-color: rgba(248, 250, 252, 0.4);
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: right;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <div class="brand-logo">S</div>
+          <div class="brand-text">
+            <div class="brand-title">StudySync</div>
+            <div class="brand-subtitle">Academic Planner & Analytics</div>
+          </div>
+        </div>
 
-  <header>
-    <h1>Dylan Eberhardt</h1>
-    <p>Cybersecurity Student</p>
-  </header>
+        <div>
+          <div class="nav-section-title">Overview</div>
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <div class="nav-icon">🏠</div>
+              <span>Executive Summary</span>
+            </li>
+            <li class="nav-item">
+              <div class="nav-icon">⚠️</div>
+              <span>Problem & Solution</span>
+            </li>
+            <li class="nav-item">
+              <div class="nav-icon">👤</div>
+              <span>User Personas</span>
+            </li>
+            <li class="nav-item">
+              <div class="nav-icon">📌</div>
+              <span>Use Cases</span>
+            </li>
+            <li class="nav-item">
+              <div class="nav-icon">📊</div>
+              <span>Market & Competition</span>
+            </li>
+            <li class="nav-item">
+              <div class="nav-icon">⚙️</div>
+              <span>Core Features & Tech</span>
+            </li>
+          </ul>
+        </div>
 
-  <main>
+        <div>
+          <div class="nav-section-title">Primary Persona</div>
+          <div class="persona-card">
+            <div class="persona-header">
+              <div class="persona-name">Alex – Cybersecurity Major</div>
+              <div class="persona-tag">Age 20 · College Student</div>
+            </div>
+            <div class="persona-meta">
+              <strong>Needs:</strong> Manage deadlines, reduce procrastination, see how study habits affect exam performance.
+            </div>
+            <div class="persona-note">
+              Alex is enrolled in multiple courses per semester and wants a single place to track assignments, log study sessions, and understand how effort translates into grades.
+            </div>
+          </div>
+        </div>
 
-    <section id="about">
-      <h2>About Me</h2>
-
-      <img src="me professional.jpeg" alt="Professional photo of Dylan Eberhardt" class="profile-photo">
-
-      <p>
-        My name is Dylan Eberhardt, and I am a cybersecurity student with a deep passion for understanding how technology works beneath the surface. 
-        What started as a curiosity about computers quickly grew into a fascination with how systems communicate, how data flows, and how vulnerabilities 
-        can be exploited or prevented. I’m driven by the idea that every device, every network, and every line of code has a story — and I want to understand 
-        that story from the inside out.
-      </p>
-
-      <p>
-        I’m especially interested in the intersection of cybersecurity and software development. The more I learn about coding, the more I realize how 
-        important secure development practices are. Writing code isn’t just about making something work — it’s about making something resilient, efficient, 
-        and safe. Whether I’m experimenting with front-end development, exploring backend logic, or studying network security concepts, I’m always looking 
-        for ways to strengthen my understanding of how systems can be protected from modern threats.
-      </p>
-
-      <p>
-        My long-term goal is to work in a field where I can actively defend systems, analyze vulnerabilities, and contribute to building a safer digital 
-        world. Cybersecurity is constantly evolving, and that’s exactly what excites me — there’s always something new to learn, a new challenge to solve, 
-        and a new skill to develop.
-      </p>
-    </section>
-
-    <section id="skills">
-      <h2>Skills</h2>
-
-      <div class="skill">
-        <p>HTML</p>
-        <div class="skill-bar">
-          <div class="skill-level" style="width: 80%;"></div>
+        <div class="sidebar-footer">
+          <span>Concept by Dylan Eberhardt</span>
+          <span class="badge-pill">Target: 19M+ U.S. college students</span>
         </div>
       </div>
+    </aside>
 
-      <div class="skill">
-        <p>CSS</p>
-        <div class="skill-bar">
-          <div class="skill-level" style="width: 70%;"></div>
+    <!-- MAIN -->
+    <main class="main">
+      <div class="main-inner">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+          <div class="top-left">
+            <div class="page-title">
+              StudySync Dashboard
+              <span class="page-pill">Full‑stack concept · UI prototype</span>
+            </div>
+            <div class="page-subtitle">
+              Plan assignments, track study sessions, and visualize academic performance trends in one centralized platform.
+            </div>
+          </div>
+          <div class="top-right">
+            <div class="pill">
+              <span class="pill-dot"></span>
+              Live concept · Not connected to backend
+            </div>
+            <button class="primary-btn">
+              <span class="icon">➕</span>
+              New Assignment
+            </button>
+          </div>
+        </header>
+
+        <!-- EXECUTIVE SUMMARY + PROBLEM/SOLUTION -->
+        <section class="layout-grid">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">1 · Executive Summary</div>
+                <div class="card-title">Why StudySync exists</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                Centralized academic hub
+              </div>
+            </div>
+            <div class="card-body">
+              <p>
+                StudySync is a full stack web application designed to help college students plan assignments, track study sessions, and visualize academic performance trends.
+              </p>
+              <p>
+                Many students struggle with time management and lack insight into how their study habits impact grades. StudySync combines task management with performance analytics in one focused academic tool.
+              </p>
+              <div class="stats-row">
+                <div class="stat">
+                  <div class="stat-label">Target market</div>
+                  <div class="stat-value">
+                    19M+
+                    <span class="stat-trend">U.S. college students</span>
+                  </div>
+                  <div class="stat-pill">Students · Ages 18–25</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Core pillars</div>
+                  <div class="stat-value">
+                    3
+                    <span class="stat-trend">integrated flows</span>
+                  </div>
+                  <div class="stat-pill">Tasks · Habits · Analytics</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Platform scope</div>
+                  <div class="stat-value">
+                    Full stack
+                    <span class="stat-trend">web app</span>
+                  </div>
+                  <div class="stat-pill">React · Node · MongoDB</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">2 · Problem & Solution</div>
+                <div class="card-title">From chaos to clarity</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                Data‑driven decisions
+              </div>
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Problem:</strong> College students often face poor time management, procrastination, and disorganized assignment tracking. Existing productivity tools manage tasks but rarely analyze study patterns or visualize academic performance.
+              </p>
+              <p>
+                <strong>Solution:</strong> StudySync uniquely integrates assignment tracking, study session logging, grade input, and interactive dashboards so students can see how effort and time investment correlate with outcomes.
+              </p>
+              <div class="pill-row">
+                <span class="pill-small accent">Assignment tracking</span>
+                <span class="pill-small success">Study session logging</span>
+                <span class="pill-small warn">Grade & trend visualization</span>
+                <span class="pill-small">Time‑management insights</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- USE CASES + LIVE MOCK DASHBOARD -->
+        <section class="section-row">
+          <!-- Use cases & user stories -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">4 · Use Cases & User Stories</div>
+                <div class="card-title">How students use StudySync</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                MongoDB‑backed data
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list">
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>Use Case 1 – Create assignments</strong><br />
+                    Students create assignments with title, due date, and course. Items are stored persistently in MongoDB and surfaced in a unified planner.
+                  </div>
+                </li>
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>Use Case 2 – Log study sessions</strong><br />
+                    Students log study sessions with duration and date, building a history of effort per course and per week.
+                  </div>
+                </li>
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>Use Case 3 – View performance dashboard</strong><br />
+                    Students view interactive dashboards that show study hours and grade trends, enabling data‑driven academic decisions.
+                  </div>
+                </li>
+              </ul>
+              <div class="pill-row">
+                <span class="pill-small">Dynamic updates</span>
+                <span class="pill-small accent">Persistent storage (MongoDB)</span>
+                <span class="pill-small success">Course‑level insights</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dashboard mock (assignments + study log + analytics) -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">Live View</div>
+                <div class="card-title">Planner & analytics snapshot</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                Frontend UI prototype
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="grid-2">
+                <!-- Assignments table -->
+                <div>
+                  <div class="card-meta">Upcoming assignments</div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Course</th>
+                        <th>Due</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Network Security Lab</td>
+                        <td>Cybersecurity 301</td>
+                        <td>Oct 12</td>
+                        <td>
+                          <span class="badge">
+                            <span class="badge-dot warn"></span>
+                            Due soon
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Midterm Study Outline</td>
+                        <td>Algorithms 210</td>
+                        <td>Oct 15</td>
+                        <td>
+                          <span class="badge">
+                            <span class="badge-dot"></span>
+                            In progress
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Threat Modeling Report</td>
+                        <td>Cybersecurity 301</td>
+                        <td>Oct 20</td>
+                        <td>
+                          <span class="badge">
+                            <span class="badge-dot"></span>
+                            Planned
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Study sessions mini log -->
+                <div>
+                  <div class="card-meta">Recent study sessions</div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Course</th>
+                        <th>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Oct 8</td>
+                        <td>Cybersecurity 301</td>
+                        <td>2h 15m</td>
+                      </tr>
+                      <tr>
+                        <td>Oct 7</td>
+                        <td>Algorithms 210</td>
+                        <td>1h 30m</td>
+                      </tr>
+                      <tr>
+                        <td>Oct 6</td>
+                        <td>Discrete Math 201</td>
+                        <td>1h 05m</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Analytics chart mock -->
+              <div class="chart-shell">
+                <div class="chart-header">
+                  <span>Study hours vs. grade trend</span>
+                  <div class="chart-legend">
+                    <div class="legend-item">
+                      <span class="legend-swatch"></span> Study hours
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-swatch alt"></span> Grade average
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-swatch muted"></span> Target goal
+                    </div>
+                  </div>
+                </div>
+                <div class="chart-body">
+                  <div class="chart-grid"></div>
+                  <div class="chart-line"></div>
+                  <div class="chart-y-axis">
+                    <span>100%</span>
+                    <span>90%</span>
+                    <span>80%</span>
+                    <span>70%</span>
+                  </div>
+                  <div class="chart-x-axis">
+                    <span>Week 1</span>
+                    <span>Week 2</span>
+                    <span>Week 3</span>
+                    <span>Week 4</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- FORMS: ASSIGNMENT + STUDY SESSION + TECH STACK -->
+        <section class="layout-grid">
+          <!-- Assignment & study session forms -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">Interactive Flows</div>
+                <div class="card-title">Create assignments & log study sessions</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                React components · Hooks
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="grid-2">
+                <!-- Assignment form -->
+                <div>
+                  <div class="card-meta">Use Case 1 · Create assignment</div>
+                  <div class="input-row" style="margin-top: 6px;">
+                    <div class="form-group">
+                      <label class="form-label">Title</label>
+                      <input class="input" placeholder="e.g. Network Security Lab" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Course</label>
+                      <input class="input" placeholder="e.g. Cybersecurity 301" />
+                    </div>
+                  </div>
+                  <div class="input-row" style="margin-top: 6px;">
+                    <div class="form-group">
+                      <label class="form-label">Due date</label>
+                      <input class="input" type="date" />
+                    </div>
+                    <button class="secondary-btn">
+                      <span>➕</span>
+                      Add assignment
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Study session form -->
+                <div>
+                  <div class="card-meta">Use Case 2 · Log study session</div>
+                  <div class="input-row" style="margin-top: 6px;">
+                    <div class="form-group">
+                      <label class="form-label">Course</label>
+                      <input class="input" placeholder="e.g. Algorithms 210" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Duration (hours)</label>
+                      <input class="input" type="number" step="0.25" placeholder="1.5" />
+                    </div>
+                  </div>
+                  <div class="input-row" style="margin-top: 6px;">
+                    <div class="form-group">
+                      <label class="form-label">Date</label>
+                      <input class="input" type="date" />
+                    </div>
+                    <button class="secondary-btn">
+                      <span>🕒</span>
+                      Log session
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pill-row" style="margin-top: 8px;">
+                <span class="pill-small accent">Event handling</span>
+                <span class="pill-small success">Dynamic state updates</span>
+                <span class="pill-small">Container / presenter pattern</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Market, competition & tech stack -->
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">5 & 6 · Market & Technical Implementation</div>
+                <div class="card-title">Positioning & stack</div>
+              </div>
+              <div class="chip">
+                <span class="chip-dot"></span>
+                Differentiated by analytics
+              </div>
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Market & competition:</strong> StudySync targets college students aged 18–25 enrolled in multiple courses per semester. Competing tools include generic student planners and task managers, but they typically lack integrated academic performance analytics and visualization.
+              </p>
+              <p>
+                <strong>Unique value:</strong> StudySync combines task management, habit tracking, and performance analytics in one academic‑focused platform, enabling students to see how their study patterns influence grades.
+              </p>
+
+              <div class="tag-row">
+                <span class="tag tech">Tailwind CSS · Responsive UI</span>
+                <span class="tag tech">React components & hooks</span>
+                <span class="tag chart">Chart.js visualizations</span>
+                <span class="tag db">MongoDB · MongoDB Atlas</span>
+                <span class="tag deploy">Vercel (frontend)</span>
+                <span class="tag deploy">Render (backend)</span>
+              </div>
+
+              <p style="margin-top: 8px;">
+                <strong>Core implementation concepts:</strong>
+              </p>
+              <ul class="list">
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>UI & layout:</strong> Tailwind CSS for responsive design, with a React component architecture and container/presenter pattern for scalable front‑end development.
+                  </div>
+                </li>
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>State & interactivity:</strong> React hooks for state management and event handling to support interactive workflows like creating assignments and logging study sessions.
+                  </div>
+                </li>
+                <li>
+                  <span class="list-bullet"></span>
+                  <div>
+                    <strong>Data & analytics:</strong> MongoDB for persistent storage of assignments, study sessions, and grades, with Chart.js powering interactive dashboards that visualize study hours and grade trends.
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </section>
+
+        <div class="footer-note">
+          This HTML & CSS file represents the StudySync UI and information architecture. Backend, React logic, and Chart.js integration would be implemented in the full stack version.
         </div>
       </div>
-
-      <div class="skill">
-        <p>Cybersecurity Fundamentals</p>
-        <div class="skill-bar">
-          <div class="skill-level" style="width: 65%;"></div>
-        </div>
-      </div>
-
-      <div class="skill">
-        <p>Networking Concepts</p>
-        <div class="skill-bar">
-          <div class="skill-level" style="width: 60%;"></div>
-        </div>
-      </div>
-
-      <div class="skill">
-        <p>Python (Beginner)</p>
-        <div class="skill-bar">
-          <div class="skill-level" style="width: 50%;"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="interests">
-      <h2>Why I Love Coding</h2>
-      <p>
-        Coding gives me the ability to create something out of nothing — to take an idea and turn it into a real, functioning piece of technology. 
-        I enjoy the problem-solving aspect of programming, especially when I’m debugging or optimizing code. There’s something incredibly satisfying 
-        about identifying an issue, understanding why it happens, and crafting a solution that makes everything run smoothly.
-      </p>
-
-      <p>
-        I’m particularly drawn to the logic behind programming. Every function, variable, and structure has a purpose, and learning how they all 
-        interact feels like solving a puzzle. As I continue to grow as a developer, I’m excited to explore more languages, frameworks, and tools 
-        that will help me build more complex and secure applications.
-      </p>
-    </section>
-
-    <section id="cybersecurity">
-      <h2>My Cybersecurity Journey</h2>
-      <p>
-        Cybersecurity is more than just protecting systems — it’s about understanding how attackers think. I’m fascinated by the mindset behind 
-        ethical hacking, penetration testing, and vulnerability analysis. Learning how to identify weaknesses in a system helps me understand how 
-        to build stronger defenses.
-      </p>
-
-      <p>
-        I’ve spent time studying topics like encryption, authentication, network protocols, and common attack vectors. The more I learn, the more 
-        I realize how important cybersecurity is in every industry. From personal devices to large-scale enterprise networks, security plays a 
-        critical role in keeping information safe.
-      </p>
-
-      <p>
-        My goal is to continue expanding my knowledge through hands-on labs, certifications, and real-world experience. I want to contribute to 
-        a future where technology is not only innovative but also secure by design.
-      </p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <form>
-        <label>Name
-          <input type="text">
-        </label>
-
-        <label>Email
-          <input type="email">
-        </label>
-
-        <label>Message
-          <textarea></textarea>
-        </label>
-
-        <button type="submit">Send</button>
-      </form>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Dylan Eberhardt</p>
-  </footer>
-<script>
-/* ------------------------------
-   PERSONAL GREETING (TIME-BASED)
------------------------------- */
-
-const header = document.querySelector("header p");
-const hour = new Date().getHours();
-let greeting;
-
-if (hour < 12) {
-  greeting = "Good morning — thanks for visiting.";
-} else if (hour < 18) {
-  greeting = "Good afternoon — glad you're here.";
-} else {
-  greeting = "Good evening — welcome to my portfolio.";
-}
-
-header.textContent = greeting;
-
-
-/* ------------------------------
-   TYPING EFFECT FOR NAME
------------------------------- */
-
-const nameElement = document.querySelector("header h1");
-const originalName = "Dylan Eberhardt";
-let index = 0;
-nameElement.textContent = "";
-
-function typeEffect() {
-  if (index < originalName.length) {
-    nameElement.textContent += originalName.charAt(index);
-    index++;
-    setTimeout(typeEffect, 80);
-  }
-}
-
-typeEffect();
-
-
-/* ------------------------------
-   SKILL BAR ANIMATION ON SCROLL
------------------------------- */
-
-const skillLevels = document.querySelectorAll(".skill-level");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const width = entry.target.style.width;
-      entry.target.style.width = "0";
-      setTimeout(() => {
-        entry.target.style.width = width;
-      }, 200);
-    }
-  });
-}, { threshold: 0.5 });
-
-skillLevels.forEach(skill => observer.observe(skill));
-
-
-/* ------------------------------
-   CONTACT FORM MESSAGE
------------------------------- */
-
-const form = document.querySelector("form");
-
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const nameInput = form.querySelector("input[type='text']").value;
-
-  alert(`Thanks ${nameInput || "for reaching out"}! I'll get back to you soon.`);
-
-  form.reset();
-});
-
-
-/* ------------------------------
-   CURSOR GLOW EFFECT
------------------------------- */
-
-const glow = document.createElement("div");
-glow.style.position = "fixed";
-glow.style.width = "15px";
-glow.style.height = "15px";
-glow.style.borderRadius = "50%";
-glow.style.background = "rgba(76, 201, 240, 0.7)";
-glow.style.pointerEvents = "none";
-glow.style.boxShadow = "0 0 20px rgba(76, 201, 240, 0.9)";
-glow.style.transform = "translate(-50%, -50%)";
-glow.style.zIndex = "9999";
-document.body.appendChild(glow);
-
-document.addEventListener("mousemove", e => {
-  glow.style.left = e.clientX + "px";
-  glow.style.top = e.clientY + "px";
-});
-</script>
+    </main>
+  </div>
 </body>
 </html>
+```
